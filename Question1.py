@@ -11,13 +11,13 @@ import numpy as np
 from sklearn.metrics import *
 import matplotlib.pyplot as plt
 
-# Sample data
+
 y_true = [0,1,1,0,1,0,1,0,1,0]
 y_pred = [0,0,1,0,0,0,1,1,1,0]
 y_prob = [0.3,0.7,0.8,0.2,0.4,0.3,0.9,0.6,0.8,0.1]
 rand_prob = np.random.rand(len(y_true))
 
-# Manual metrics
+
 TP = sum((yt==1 and yp==1) for yt, yp in zip(y_true, y_pred))
 TN = sum((yt==0 and yp==0) for yt, yp in zip(y_true, y_pred))
 FP = sum((yt==0 and yp==1) for yt, yp in zip(y_true, y_pred))
@@ -34,14 +34,14 @@ mcc = (TP*TN - FP*FN) / ((TP+FP)*(TP+FN)*(TN+FP)*(TN+FN))**0.5
 print("Manual → Acc: %.2f, Prec: %.2f, Rec: %.2f, F1: %.2f, MCC: %.2f, Spec: %.2f, NPV: %.2f" %
       (acc, prec, rec, f1, mcc, spec, npv))
 
-# Sklearn comparison
+
 print("Sklearn →", "Acc:", accuracy_score(y_true, y_pred),
       "Prec:", precision_score(y_true, y_pred),
       "Rec:", recall_score(y_true, y_pred),
       "F1:", f1_score(y_true, y_pred),
       "\nConf Mat:\n", confusion_matrix(y_true, y_pred))
 
-# ROC & AUC
+
 fpr1, tpr1, _ = roc_curve(y_true, y_prob)
 fpr2, tpr2, _ = roc_curve(y_true, rand_prob)
 plt.plot(fpr1, tpr1)
