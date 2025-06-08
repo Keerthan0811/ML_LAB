@@ -10,11 +10,9 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 
-# Load dataset and split
 X, y = load_iris(return_X_y=True)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
 
-# Vary number of trees
 trees = [1, 5, 10, 20, 50, 100]
 accuracies, f1s = [], []
 
@@ -25,7 +23,6 @@ for n in trees:
     accuracies.append(accuracy_score(y_test, y_pred))
     f1s.append(f1_score(y_test, y_pred, average='macro'))
 
-# Plot
 plt.plot(trees, accuracies, label='Accuracy')
 plt.plot(trees, f1s, label='F1 Score')
 plt.xlabel("Number of Trees"); plt.ylabel("Score"); plt.legend(); plt.grid()
