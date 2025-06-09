@@ -6,14 +6,14 @@ from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 
-# Load data
+
 data = load_iris()
 X = data.data
 
-# Reduce to 2D for visualization
+
 X_pca = PCA(n_components=2).fit_transform(X)
 
-# Try K = 2, 3, 4
+
 ks = [2, 3, 4]
 plt.figure(figsize=(12, 3))
 
