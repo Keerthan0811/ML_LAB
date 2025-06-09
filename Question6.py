@@ -26,3 +26,40 @@ print("Classification Report:\n", classification_report(y_test, y_pred))
 new_sample = [[0.5, -1.2]]
 pred = model.predict(new_sample)[0]
 print("Prediction for new sample:", "Class 1" if pred else "Class 0")
+
+
+#2
+
+
+import pandas as pd
+import numpy as np
+from sklearn import metrics
+from sklearn.preprocessing import LabelEncoder
+from sklearn.metrics import classification_report
+
+
+df=pd.read_csv("/content/class_problem.csv")
+le=LabelEncoder()
+color=le.fit_transform(df['color'])
+legs=le.fit_transform(df['legs'])
+height=le.fit_transform(df['height'])
+smelly=le.fit_transform(df['smelly'])
+species=le.fit_transform(df['species'])
+
+features=pd.DataFrame({
+    "color":color,
+    "legs":legs,
+    "height":height,
+    "smelly":smelly
+})
+label=species
+
+
+from sklearn.naive_bayes import GaussianNB
+
+model=GaussianNB()
+model.fit(features,label)
+
+new=[0,0,1,0]
+pred=model.predict([new])
+print("newsample-1: predict",pred)
