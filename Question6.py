@@ -154,3 +154,19 @@ new_data = pd.DataFrame({
 
 new_pred = model.predict(new_data)
 print("\nNew Prediction (Buys Computer):", 'Yes' if new_pred[0] == 1 else 'No') # Use the correct encoder for the output label if needed for inverse_transform, but here we just print Yes/No based on the predicted integer
+
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       1.00      0.50      0.67         2
+           1       0.75      1.00      0.86         3
+
+    accuracy                           0.80         5
+   macro avg       0.88      0.75      0.76         5
+weighted avg       0.85      0.80      0.78         5
+
+Accuracy Score: 0.8
+
+
+New Prediction (Buys Computer): Yes
