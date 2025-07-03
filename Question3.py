@@ -11,7 +11,7 @@ from sklearn.datasets import load_breast_cancer
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report
 
 # 1) Choose dataset: Breast Cancer Wisconsin (binary, 30 features, n=569)
 data = load_breast_cancer()
@@ -28,33 +28,34 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 # 4) Experiment: vary n_estimators
 tree_counts = [1, 5, 10, 20, 50, 100, 200]
-metrics = {'accuracy': [], 'precision': [], 'recall': [], 'f1': []}
+acc=[]
+pre=[]
+f1=[]
+rec=[]
 
 for n in tree_counts:
     clf = RandomForestClassifier(n_estimators=n, criterion='entropy', random_state=42)
     clf.fit(X_train, y_train)
     y_pred = clf.predict(X_test)
-    metrics['accuracy'].append(accuracy_score(y_test, y_pred))
-    metrics['precision'].append(precision_score(y_test, y_pred))
-    metrics['recall'].append(recall_score(y_test, y_pred))
-    metrics['f1'].append(f1_score(y_test, y_pred))
-print("Performance Metrics:")
-for i, n in enumerate(tree_counts):
-    print(f"\nNumber of Trees: {n}")
-    print(f"Accuracy: {metrics['accuracy'][i]:.4f}")
-    print(f"Precision: {metrics['precision'][i]:.4f}")
-    print(f"Recall: {metrics['recall'][i]:.4f}")
-    print(f"F1-Score: {metrics['f1'][i]:.4f}")
+    acc.append(accuracy_score(y_test, y_pred))
+    pre.append(precision_score(y_test, y_pred))
+    rec.append(recall_score(y_test, y_pred))
+    f1.append(f1_score(y_test, y_pred))
+
+    print(f"Classification report for number of trees: {n}")
+    print(classification_report(y_test,y_pred))
+    print("Accuracy: {accuracy_score(y_test,y_pred)}")
 # 5) Plotting
 plt.figure(figsize=(10, 6))
-for metric, marker in zip(metrics, ['o', 's', '^', 'x']):
-    plt.plot(tree_counts, metrics[metric], marker=marker, label=metric.title())
+plt.plot(tree_counts,acc,c='r',marker='o',label='Accuracy')
+plt.plot(tree_counts,f1,c='b',marker='s',label='F1_Score')
+plt.plot(tree_counts,rec,c='g',marker='^',label='Recaall')
+plt.plot(tree_counts,pre,c='m',marker='*',label='Precision')
 plt.xlabel('Number of Trees (n_estimators)')
 plt.ylabel('Score')
 plt.title('Random Forest Performance vs. Number of Trees\n(Breast Cancer Wisconsin)')
 plt.legend()
 plt.grid(True)
-plt.tight_layout()
 plt.show()
 
 # 6) Interpretation:
